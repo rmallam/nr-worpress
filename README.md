@@ -94,3 +94,10 @@ kubectl create namespace aks ; helm upgrade --install newrelic-bundle newrelic/n
 
   ![alt text](https://github.com/rmallam/nr-worpress/blob/main/phpappnr.png?raw=true)
    
+
+- Browser Agent
+   
+   1. Navigate to New relic UI and select browser agent tab
+   2. Follow the on screen instructions to configure the browser agent to PHP applcation
+
+  ![alt text](https://github.com/rmallam/nr-worpress/blob/main/browseragent.png?raw=true)
