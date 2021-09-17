@@ -79,3 +79,18 @@ kubectl create namespace aks ; helm upgrade --install newrelic-bundle newrelic/n
 ![alt text](https://github.com/rmallam/nr-worpress/blob/main/newrelicaks.png?raw=true)
 
 ![alt text](https://github.com/rmallam/nr-worpress/blob/main/newrelicaks2.png?raw=true)
+
+- Application agent
+  
+  1. Update the docker image to include the php agent and deamon 
+     Refer to [dockerfile](dockerfile)
+  2. Update the wordpress deployment with this new image
+      ```s
+      docker build -t mallam/nrwordpress:3.0.0 .
+      docker push mallam/nrwordpress:3.0.0
+      kubectl set image deployment/nginx-deployment wordpress=nrwordpress:3.0.0 --record
+      ```
+
+
+  ![alt text](https://github.com/rmallam/nr-worpress/blob/main/phpappnr.png?raw=true)
+   
