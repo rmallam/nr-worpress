@@ -44,6 +44,9 @@ kubectl get svc --namespace wordpress wordpress --template "{{ range (index .sta
 ```
 kubectl get secret wordpress -o jsonpath="{.data.wordpress-password}" -n wordpress | base64 --decode
 
+![alt text](https://github.com/rmallam/nr-worpress/blob/main/worpress.png?raw=true)
+
+![alt text](https://github.com/rmallam/nr-worpress/blob/main/wploggedin.png?raw=true)
 
 ### Types of agents
 
