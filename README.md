@@ -50,3 +50,27 @@ kubectl get secret wordpress -o jsonpath="{.data.wordpress-password}" -n wordpre
 
 ### Types of agents
 
+- **Infrastructure agent/Kuberentes integration**
+
+```
+kubectl apply -f https://raw.githubusercontent.com/pixie-labs/pixie/main/k8s/operator/crd/base/px.dev_viziers.yaml && \
+kubectl apply -f https://raw.githubusercontent.com/pixie-labs/pixie/main/k8s/operator/helm/crds/olm_crd.yaml && \
+helm repo add newrelic https://helm-charts.newrelic.com && helm repo update && \
+kubectl create namespace aks ; helm upgrade --install newrelic-bundle newrelic/nri-bundle \
+ --set global.licenseKey=**licencehere** \
+ --set global.cluster=aks \
+ --namespace=aks \
+ --set newrelic-infrastructure.privileged=true \
+ --set ksm.enabled=true \
+ --set prometheus.enabled=true \
+ --set kubeEvents.enabled=true \
+ --set logging.enabled=true \
+ --set newrelic-pixie.enabled=true \
+ --set newrelic-pixie.apiKey=px-api-c590d8b0-3ff5-4c05-a4de-843a2a0ebc92 \
+ --set pixie-chart.enabled=true \
+ --set pixie-chart.deployKey=px-dep-5b8ee5f2-557a-404e-80fa-63122305a420 \
+ --set pixie-chart.clusterName=aks 
+
+![alt text](https://github.com/rmallam/nr-worpress/blob/main/newrelicaks.png?raw=true)
+
+![alt text](https://github.com/rmallam/nr-worpress/blob/main/newrelicaks2.png?raw=true)
