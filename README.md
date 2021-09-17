@@ -29,20 +29,23 @@ This document speaks about various New-Relic agents and describes the process of
 
 - Install bitmani opencart
   
-  ``` 
+```s
   kubectl create namespace wordpress
   helm repo add azure-marketplace https://marketplace.azurecr.io/helm/v1/repo
   helm install wordpress azure-marketplace/opencart -n wordpress
+```
   
 -  get ingress lb
 
-```
+```s
 kubectl get svc --namespace wordpress wordpress --template "{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}"
+```
 
 - get password for wordpress
 
-```
+```s
 kubectl get secret wordpress -o jsonpath="{.data.wordpress-password}" -n wordpress | base64 --decode
+```
 
 ![alt text](https://github.com/rmallam/nr-worpress/blob/main/worpress.png?raw=true)
 
@@ -52,12 +55,13 @@ kubectl get secret wordpress -o jsonpath="{.data.wordpress-password}" -n wordpre
 
 - **Infrastructure agent/Kuberentes integration**
 
-```
-kubectl apply -f https://raw.githubusercontent.com/pixie-labs/pixie/main/k8s/operator/crd/base/px.dev_viziers.yaml && \
-kubectl apply -f https://raw.githubusercontent.com/pixie-labs/pixie/main/k8s/operator/helm/crds/olm_crd.yaml && \
-helm repo add newrelic https://helm-charts.newrelic.com && helm repo update && \
+
+```s
+kubectl apply -f https://raw.githubusercontent.com/pixie-labs/pixie/main/k8s/operator/crd/base/px.dev_viziers.yaml 
+kubectl apply -f https://raw.githubusercontent.com/pixie-labs/pixie/main/k8s/operator/helm/crds/olm_crd.yaml 
+helm repo add newrelic https://helm-charts.newrelic.com  helm repo update
 kubectl create namespace aks ; helm upgrade --install newrelic-bundle newrelic/nri-bundle \
- --set global.licenseKey=**licencehere** \
+ --set global.licenseKey=licencehere \
  --set global.cluster=aks \
  --namespace=aks \
  --set newrelic-infrastructure.privileged=true \
@@ -70,6 +74,7 @@ kubectl create namespace aks ; helm upgrade --install newrelic-bundle newrelic/n
  --set pixie-chart.enabled=true \
  --set pixie-chart.deployKey=px-dep-5b8ee5f2-557a-404e-80fa-63122305a420 \
  --set pixie-chart.clusterName=aks 
+ ```
 
 ![alt text](https://github.com/rmallam/nr-worpress/blob/main/newrelicaks.png?raw=true)
 
